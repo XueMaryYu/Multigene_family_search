@@ -1,0 +1,27 @@
+1) # split the fasta protein sequences into individual protein fasta sequence;
+# the split_fasta.pls is attached in the multigene family search folder.
+
+perl split_fasta.pl -i input.fasta -o result.txt -n 1
+
+2) # build the whole protein sequences index
+
+makeblastdb -dbtype prot -in Bd_protein.fasta
+
+3) # run blast p using the individual protein sequence against the whole protein sequences; e value is smaller than e-10.
+
+for file in ~/Desktop/Mary_blastp/input/*
+do
+  blastp -query $file -db Bd_protein.fasta  -evalue 0.0000000001 -out $file.out
+done
+
+4)# after the run, check the file size and set the file size you think that will contain multigene family hits. 30k for my case.
+
+ find . -type f -size +30k -exec cp -nv {} ../30kplus/ \
+5)# compress the file if you want to.
+
+ tar -cvzf 30kplus.tar.gz 30kplus
+
+
+PS: top // check running or not "q" to quit
+    ls -lh // check the size of the files in a folder
+    find . -type f -size -10k // just for display the file size that is smaller than 10k
