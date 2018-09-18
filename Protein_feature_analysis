@@ -1,0 +1,22 @@
+cd #Machine
+cailab@wdxtba361-z1
+
+# Download
+wget http://www.cbs.dtu.dk/download/1067DDD2-A0A2-11E8-87AB-2B84465A7DCF/chlorop-1.1.Linux.tar.Z
+wget http://www.cbs.dtu.dk/download/4460BCA8-A0A2-11E8-889F-0C88465A7DCF/targetp-1.1b.Linux.tar.Z
+wget http://www.cbs.dtu.dk/download/2B2C3B7C-A0A2-11E8-B152-2E86465A7DCF/signalp-4.1f.Linux.tar.gz
+
+# Uncompress
+tar -xvzf chlorop-1.1.Linux.tar.Z
+tar -xvzf targetp-1.1b.Linux.tar.Z
+tar -xvzf signalp-4.1f.Linux.tar.gz
+
+# Testing
+cd MarySoftware/chlorop-1.1
+./chlorop -F test/test12.fsa
+
+cd /MarySoftware/signalp-4.1 
+./signalp -t euk -f all test/euk10.fsa > euk10.fsa.all_out
+
+cd /MarySoftware/signalp-4.1
+./targetp -N test/twelve.fsa 
