@@ -24,7 +24,11 @@
   3)# in the csv file, list the file size bigger than 10K and get the geneID 
     =IF(C2>10,C2,"") // excel IF function
   
-  4)# extract the protein sequences based on the geneID (stored in BdMGF_2.txt) and caculate the molecular weight of the proteins in R
+  4)# Choose the desired proteins (with a signal peptide in this case) and in our study we picked one and looked into blastp file and 
+    # get the geneID of other similar proteins, extract the protein sequences based on the geneID (stored in BdMGF_2.txt) and caculate 
+    # the molecular weight of the proteins in R. All the other features of proteins were calculated including: signal peptide,
+    # transmembrane domains, secreted, apicoplast target, gene function, FPKM start end, amnino acid lenght.
+    # http://www.cbs.dtu.dk/services/ 
      install.packages("seqinr")
      install.packages("Peptides")
      library(seqinr)
