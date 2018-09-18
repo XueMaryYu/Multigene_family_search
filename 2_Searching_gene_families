@@ -1,0 +1,40 @@
+1)# in the excel, search for proteins with function of "hypothetical proteins, conserved"
+  IF function: =IF(SPTM_summary!$F2="hypothetical protein, conserved",SPTM_summary!F2,"")
+
+2)# find the gene IDs of hypothetical proteins, conserved. for each protein, there is a blastp corresponding file, find the size of each 
+  # file based on gene IDs of hypothetical proteins.
+  cd Desktop/Mary_blastp/output // in the linux machine, change the directory to the blastp file
+  ls -lh > name_1.txt // check the size of each file and output it in an txt file
+  # transfer the files on the linux machine to windows using winSCP. Open R
+  setwd("../Desktop/") // in the windows machine, change the directory to desktop 
+  list.files() // list the files on the desktop
+  install.packages("gdata") // install gdata package
+  library(gdata) // load the library
+  read.xls("name_1.xlsx") // read the xlsx file
+  page1 <- read.xls("name_1.xlsx") // read sheet1 as page1
+  page2 <- read.xls("name_1.xlsx", sheet=2) // read sheet2 as page2
+  page2 //print page2
+  as.vector(page2) // change page2 to a vector
+  as.vector(page2[,1]) // print out the page2 first column
+  page2 <- as.vector(page2[,1]) //replace page2 as column1 vector
+  sapply(page2, function(name){page1[page1[,1] %in% name,]}) //find the file size based on page2 geneID
+  t(sapply(page2, function(name){page1[page1[,1] %in% name,]})) // list the output as a table
+  write.csv(t(sapply(page2, function(name){page1[page1[,1] %in% name,]})), "maryResults.csv") // export the file on the desktop
+  
+  3)# in the csv file, list the file size bigger than 10K and get the geneID 
+    =IF(C2>10,C2,"") // excel IF function
+  
+  4)# extract the protein sequences based on the geneID (stored in BdMGF_2.txt) and caculate the molecular weight of the proteins in R
+     install.packages("seqinr")
+     install.packages("Peptides")
+     library(seqinr)
+     library(Peptides)
+     read.fasta("../Desktop/BdMGF_2.txt")
+     write.table(mw(read.fasta("../Desktop/BdMGF_2.txt"))/1000)
+     write.table(mw(read.fasta("../Desktop/BdMGF_2.txt"))/1000, "../Desktop/mwMary.txt") // save the file on the desktop
+     Peptides::lengthpep(read.fasta("../Desktop/BdMGF_2")) // check the length of the peptides
+     
+     
+
+    
+    
